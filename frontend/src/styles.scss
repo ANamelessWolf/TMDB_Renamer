@@ -1,0 +1,129 @@
+@use '@angular/material' as mat;
+@import 'styles/variables';
+
+// ── Angular Material Theme ────────────────────────────
+@include mat.core();
+
+$primary-palette: mat.define-palette(mat.$deep-purple-palette, 400, 200, 700);
+$accent-palette: mat.define-palette(mat.$teal-palette, A400, A200, A700);
+$warn-palette: mat.define-palette(mat.$red-palette);
+
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $primary-palette,
+    accent: $accent-palette,
+    warn: $warn-palette,
+  ),
+  typography: mat.define-typography-config(
+    $font-family: $font-family,
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($dark-theme);
+
+// ── Global Reset & Base ───────────────────────────────
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: $color-bg-primary;
+  color: $color-text-primary;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ── Material Overrides ────────────────────────────────
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-color: #{$color-bg-modal};
+  border-radius: $radius-lg !important;
+}
+
+.mat-mdc-snack-bar-container {
+  &.snack-success .mdc-snackbar__surface {
+    background: $color-success !important;
+    color: #fff !important;
+  }
+
+  &.snack-error .mdc-snackbar__surface {
+    background: $color-error !important;
+    color: #fff !important;
+  }
+
+  &.snack-info .mdc-snackbar__surface {
+    background: $color-info !important;
+    color: #111 !important;
+  }
+}
+
+.mat-mdc-form-field {
+  .mdc-text-field {
+    background-color: $color-bg-input !important;
+    border-radius: $radius-md !important;
+  }
+}
+
+.mat-mdc-select-panel {
+  background: $color-bg-card !important;
+}
+
+// ── Scrollbar ─────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-border-light;
+  border-radius: $radius-full;
+
+  &:hover {
+    background: $color-text-muted;
+  }
+}
+
+// ── Utility Classes ───────────────────────────────────
+.text-muted    { color: $color-text-muted; }
+.text-secondary { color: $color-text-secondary; }
+.text-success  { color: $color-success; }
+.text-error    { color: $color-error; }
+.text-accent   { color: $color-accent; }
+.text-primary-color { color: $color-primary; }
+
+.font-mono {
+  font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+  font-size: $font-size-sm;
+}
+
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px $spacing-sm;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.3px;
+
+  &.tag-season {
+    background: rgba($color-primary, 0.15);
+    color: $color-primary-light;
+    border: 1px solid rgba($color-primary, 0.3);
+  }
+}

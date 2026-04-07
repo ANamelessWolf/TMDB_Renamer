@@ -1,0 +1,84 @@
+<div class="item" [class.item--no-mapping]="hasNoMapping">
+
+  <!-- ── Source ─────────────────────────────────────── -->
+  <div class="item__row item__row--source">
+    <span class="item__label">Source</span>
+    <span class="item__source-file" [title]="mapping.file">{{ mapping.file }}</span>
+  </div>
+
+  <!-- ── Links ──────────────────────────────────────── -->
+  <div class="item__row item__row--links">
+    <span class="item__label">Links</span>
+    <div class="item__links">
+
+      @if (mapping.allEpisodes.length === 0) {
+        <div class="item__link-row">
+          <span class="item__no-link">No episode assigned</span>
+          <button type="button" mat-stroked-button class="item__btn-add" (click)="onAddEpisode()">
+            + Add
+          </button>
+        </div>
+      } @else {
+        @for (ep of mapping.allEpisodes; track ep.id; let last = $last) {
+          <div class="item__link-row">
+            <span class="item__ep-code">{{ getEpisodeCode(ep) }}</span>
+            <span class="item__ep-name">{{ ep.name }}</span>
+
+            <div class="item__link-actions">
+              @if (last) {
+                <button type="button" mat-stroked-button class="item__btn-add" (click)="onAddEpisode()">
+                  + Add
+                </button>
+              }
+              @if (!isBaseEpisode(ep)) {
+                <button type="button" mat-stroked-button class="item__btn-remove" (click)="onRemoveEpisode(ep)">
+                  Remove
+                </button>
+              }
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  <!-- ── Destination ────────────────────────────────── -->
+  <div class="item__row item__row--destination">
+    <span class="item__label">Destination</span>
+
+    @if (!isEditingTitle) {
+      <div class="item__destination" [class.item__destination--unmapped]="hasNoMapping">
+        <span class="item__dest-prefix" [class.item__dest-prefix--specials]="mapping.allEpisodes.length > 0 && mapping.allEpisodes[0].season_number === 0">
+          {{ destinationPrefix }}
+        </span>
+        @if (!hasNoMapping) {
+          <span class="item__dest-title">{{ mapping.editableTitle }}</span>
+          <span class="item__dest-ext">{{ mapping.extension }}</span>
+          <button type="button" mat-button class="item__btn-edit" (click)="startEditTitle()">Edit</button>
+        } @else {
+          <span class="item__dest-same">{{ mapping.file }}</span>
+        }
+      </div>
+    } @else {
+      <!-- Edit mode -->
+      <div class="item__dest-edit">
+        <span class="item__dest-prefix-locked">{{ destinationPrefix }}&nbsp;</span>
+        <mat-form-field appearance="outline" class="item__dest-input" subscriptSizing="dynamic">
+          <input
+            matInput
+            [formControl]="titleControl"
+            (keydown)="onTitleKeydown($event)"
+            autocomplete="off"
+            placeholder="Episode title"
+          />
+          @if (titleError) {
+            <mat-error>{{ titleError }}</mat-error>
+          }
+        </mat-form-field>
+        <span class="item__dest-ext-locked">{{ mapping.extension }}</span>
+        <button type="button" mat-flat-button color="primary" class="item__btn-confirm-edit" (click)="confirmEditTitle()">Save</button>
+        <button type="button" mat-button class="item__btn-cancel-edit" (click)="cancelEditTitle()">Cancel</button>
+      </div>
+    }
+  </div>
+</div>

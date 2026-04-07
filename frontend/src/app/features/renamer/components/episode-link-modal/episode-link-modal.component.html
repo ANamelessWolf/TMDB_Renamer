@@ -1,0 +1,75 @@
+<div class="modal">
+  <div class="modal__header">
+    <h2 class="modal__title">
+      <mat-icon>add_link</mat-icon>
+      Add Episode Link
+    </h2>
+    <p class="modal__subtitle" [title]="data.currentFile">
+      {{ data.currentFile }}
+    </p>
+  </div>
+
+  <div class="modal__search">
+    <mat-form-field appearance="outline" class="modal__search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        placeholder="Search episodes…"
+        [value]="filterText"
+        (input)="onFilter($any($event.target).value)"
+        autocomplete="off"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="modal__list-container">
+    @if (filteredEpisodes.length === 0) {
+      <div class="modal__empty">
+        <mat-icon>info_outline</mat-icon>
+        <span>No episodes available</span>
+      </div>
+    } @else {
+      <div class="modal__list">
+        @for (ep of filteredEpisodes; track ep.id) {
+          <div
+            class="modal__episode"
+            [class.modal__episode--selected]="isSelected(ep.episode_number)"
+            (click)="toggleEpisode(ep.episode_number)"
+            (keyup.enter)="toggleEpisode(ep.episode_number)"
+            tabindex="0"
+            role="checkbox"
+            [attr.aria-checked]="isSelected(ep.episode_number)"
+          >
+            <div class="modal__episode-check">
+              <mat-icon>{{ isSelected(ep.episode_number) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            </div>
+            <div class="modal__episode-info">
+              <span class="modal__episode-code">{{ getEpisodeCode(ep) }}</span>
+              <span class="modal__episode-name">{{ ep.name }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (selectedNumbers.size > 0) {
+    <div class="modal__selection-summary">
+      <mat-icon>check</mat-icon>
+      {{ selectedNumbers.size }} episode{{ selectedNumbers.size > 1 ? 's' : '' }} selected
+    </div>
+  }
+
+  <div class="modal__actions">
+    <button mat-button (click)="cancel()" class="modal__btn-cancel">Cancel</button>
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="!canConfirm"
+      (click)="confirm()"
+      class="modal__btn-confirm"
+    >
+      Add Link{{ selectedNumbers.size > 1 ? 's' : '' }}
+    </button>
+  </div>
+</div>

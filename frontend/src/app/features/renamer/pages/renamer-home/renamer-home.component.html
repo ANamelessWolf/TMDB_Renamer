@@ -1,0 +1,182 @@
+<div class="page">
+  <app-top-bar></app-top-bar>
+
+  <main class="page__content">
+
+    <!-- ── Toolbar ──────────────────────────────────── -->
+    <section class="toolbar">
+      <div class="toolbar__row">
+
+        <!-- Path input -->
+        <mat-form-field appearance="outline" class="toolbar__path-field">
+          <mat-label>Folder Path</mat-label>
+          <mat-icon matPrefix>folder_open</mat-icon>
+          <input
+            matInput
+            [formControl]="pathControl"
+            placeholder="M:\Shows\My Show (2022)"
+            (keyup.enter)="onRefresh()"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          @if (pathError) {
+            <mat-error>{{ pathError }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Refresh -->
+        <button
+          mat-flat-button
+          color="primary"
+          class="toolbar__refresh-btn"
+          (click)="onRefresh()"
+          [disabled]="isLoading"
+        >
+          @if (isLoading) {
+            <mat-spinner diameter="18" strokeWidth="2.5"></mat-spinner>
+          } @else {
+            <mat-icon>refresh</mat-icon>
+          }
+          <span>Refresh</span>
+        </button>
+
+        <!-- Season selector -->
+        @if (allSeasons.length > 0) {
+          <mat-form-field appearance="outline" class="toolbar__season-field">
+            <mat-label>Season</mat-label>
+            <mat-icon matPrefix>video_library</mat-icon>
+            <mat-select [formControl]="seasonControl">
+              @for (season of allSeasons; track season.season_number) {
+                <mat-option [value]="season.season_number">
+                  {{ getSeasonOptionLabel(season) }} ({{ season.episode_count }} eps)
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+      </div>
+
+      <!-- TMDB search query — shown once files are loaded -->
+      @if (sourceFiles.length > 0) {
+        <div class="toolbar__row toolbar__row--tmdb">
+          <mat-form-field appearance="outline" class="toolbar__tmdb-field">
+            <mat-label>TMDB Search Query</mat-label>
+            <mat-icon matPrefix>tv</mat-icon>
+            <input
+              matInput
+              [formControl]="tmdbQueryControl"
+              placeholder="Show title…"
+              (keyup.enter)="onSearchTmdb()"
+              autocomplete="off"
+            />
+            @if (selectedShowName) {
+              <mat-hint>Matched: {{ selectedShowName }}</mat-hint>
+            }
+          </mat-form-field>
+          <button
+            type="button"
+            mat-stroked-button
+            class="toolbar__tmdb-search-btn"
+            (click)="onSearchTmdb()"
+            [disabled]="isLoadingSeasons"
+          >
+            @if (isLoadingSeasons) {
+              <mat-spinner diameter="16" strokeWidth="2"></mat-spinner>
+            } @else {
+              <mat-icon>search</mat-icon>
+            }
+            Search TMDB
+          </button>
+        </div>
+      }
+
+      <!-- Filter + Save row -->
+      @if (hasData) {
+        <div class="toolbar__row toolbar__row--filter">
+          <mat-form-field appearance="outline" class="toolbar__filter-field">
+            <mat-icon matPrefix>search</mat-icon>
+            <input
+              matInput
+              [formControl]="filterControl"
+              placeholder="Filter files or episodes…"
+              autocomplete="off"
+            />
+            @if (filterControl.value) {
+              <button matSuffix mat-icon-button (click)="filterControl.setValue('')">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </mat-form-field>
+
+          <div class="toolbar__stats">
+            <span>{{ sourceFiles.length }} file{{ sourceFiles.length !== 1 ? 's' : '' }}</span>
+            @if (filterControl.value) {
+              <span class="toolbar__stats-filtered">
+                &middot; {{ filteredMappings.length }} shown
+              </span>
+            }
+          </div>
+
+          <button
+            mat-flat-button
+            color="accent"
+            class="toolbar__save-btn"
+            (click)="onSave()"
+            [disabled]="!hasMappingsToSave || isSaving"
+          >
+            @if (isSaving) {
+              <mat-spinner diameter="18" strokeWidth="2.5"></mat-spinner>
+            } @else {
+              <mat-icon>save</mat-icon>
+            }
+            <span>Save &amp; Rename</span>
+          </button>
+        </div>
+      }
+    </section>
+
+    <!-- ── Loading state ─────────────────────────────── -->
+    @if (isLoading) {
+      <div class="state-view">
+        <mat-spinner diameter="48"></mat-spinner>
+        <p class="state-view__text">
+          @if (isLoadingFiles) { Reading files… }
+          @else { Fetching TMDB data… }
+        </p>
+      </div>
+    }
+
+    <!-- ── Empty / initial state ─────────────────────── -->
+    @if (!isLoading && sourceFiles.length === 0 && !pathError) {
+      <div class="state-view state-view--empty">
+        <mat-icon class="state-view__icon">movie_filter</mat-icon>
+        <p class="state-view__title">No files loaded</p>
+        <p class="state-view__subtitle">Enter a folder path above and click <strong>Refresh</strong></p>
+      </div>
+    }
+
+    <!-- ── Mapping list ───────────────────────────────── -->
+    @if (!isLoading && filteredMappings.length > 0) {
+      <section class="mapping-list">
+        @for (mapping of filteredMappings; track mapping.file; let i = $index) {
+          <app-file-mapping-item
+            [mapping]="mapping"
+            [index]="i"
+            (addEpisode)="onAddEpisode($event)"
+            (removeEpisode)="onRemoveEpisode($event)"
+            (updateTitle)="onUpdateTitle($event)"
+          ></app-file-mapping-item>
+        }
+      </section>
+    }
+
+    <!-- ── No filter results ─────────────────────────── -->
+    @if (!isLoading && sourceFiles.length > 0 && filteredMappings.length === 0 && filterControl.value) {
+      <div class="state-view">
+        <mat-icon>search_off</mat-icon>
+        <p>No matches for "{{ filterControl.value }}"</p>
+      </div>
+    }
+
+  </main>
+</div>

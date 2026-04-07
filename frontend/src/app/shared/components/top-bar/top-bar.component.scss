@@ -1,0 +1,52 @@
+@import '../../../../styles/variables';
+
+.top-bar {
+  background: $color-bg-secondary !important;
+  border-bottom: 1px solid $color-border;
+  height: $top-bar-height;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: $shadow-md;
+
+  &__inner {
+    width: 100%;
+    max-width: $content-max-width;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $spacing-xl;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__icon {
+    color: $color-primary;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    letter-spacing: -0.3px;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    font-weight: $font-weight-regular;
+    display: none;
+
+    @media (min-width: 600px) {
+      display: block;
+    }
+  }
+}

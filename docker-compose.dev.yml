@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: tmdb_renamer_backend
+    ports:
+      - "3004:3000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/tsconfig.json:/app/tsconfig.json
+      # Mount Windows drives you need to access — add more as needed
+      # Docker Desktop on Windows maps drives under //<drive-letter>/
+      - M:/:/mnt/m
+    restart: unless-stopped
+    networks:
+      - tmdb_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: tmdb_renamer_frontend
+    ports:
+      - "4204:4200"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - tmdb_net
+
+networks:
+  tmdb_net:
+    driver: bridge

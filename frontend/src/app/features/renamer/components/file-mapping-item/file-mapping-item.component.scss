@@ -1,0 +1,235 @@
+@import '../../../../../styles/variables';
+
+.item {
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-left: $card-border-left-width solid $color-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-base $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  transition: box-shadow $transition-base, border-color $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-card;
+    border-color: $color-border-light;
+    border-left-color: $color-primary-light;
+  }
+
+  &--no-mapping {
+    border-left-color: $color-text-muted;
+    opacity: 0.7;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-base;
+    min-height: 28px;
+  }
+
+  &__label {
+    flex-shrink: 0;
+    width: 80px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: $color-text-label;
+    padding-top: 4px;
+  }
+
+  // ── Source ────────────────────────────────────────────
+  &__source-file {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    word-break: break-all;
+    line-height: $line-height-relaxed;
+  }
+
+  // ── Links ─────────────────────────────────────────────
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  &__link-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    min-height: 32px;
+  }
+
+  &__ep-code {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-primary-light;
+    min-width: 70px;
+    flex-shrink: 0;
+  }
+
+  &__ep-name {
+    font-size: $font-size-base;
+    color: $color-text-primary;
+    flex: 1;
+  }
+
+  &__link-actions {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+  }
+
+  &__no-link {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    font-style: italic;
+    padding-top: 4px;
+  }
+
+  &__btn-add {
+    color: $color-accent !important;
+    border-color: rgba($color-accent, 0.5) !important;
+    font-size: $font-size-xs !important;
+    font-weight: $font-weight-semibold !important;
+    height: 26px !important;
+    line-height: 24px !important;
+    padding: 0 $spacing-sm !important;
+    min-width: unset !important;
+
+    &:hover {
+      background: rgba($color-accent, 0.08) !important;
+      border-color: $color-accent !important;
+    }
+  }
+
+  &__btn-remove {
+    color: $color-error !important;
+    border-color: rgba($color-error, 0.4) !important;
+    font-size: $font-size-xs !important;
+    font-weight: $font-weight-semibold !important;
+    height: 26px !important;
+    line-height: 24px !important;
+    padding: 0 $spacing-sm !important;
+    min-width: unset !important;
+
+    &:hover {
+      background: rgba($color-error, 0.08) !important;
+      border-color: $color-error !important;
+    }
+  }
+
+  // ── Destination ───────────────────────────────────────
+  &__destination {
+    display: flex;
+    align-items: baseline;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+    flex: 1;
+
+    &--unmapped {
+      opacity: 0.5;
+    }
+  }
+
+  &__dest-prefix {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-accent;
+    flex-shrink: 0;
+
+    &--specials {
+      color: $color-warning;
+    }
+  }
+
+  &__dest-title {
+    font-size: $font-size-base;
+    color: $color-text-primary;
+    font-weight: $font-weight-medium;
+  }
+
+  &__dest-ext {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    flex-shrink: 0;
+  }
+
+  &__dest-same {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    font-style: italic;
+  }
+
+  &__btn-edit {
+    color: $color-text-muted !important;
+    font-size: $font-size-xs !important;
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 $spacing-xs !important;
+    min-width: unset !important;
+    margin-left: $spacing-xs;
+
+    &:hover {
+      color: $color-text-primary !important;
+    }
+  }
+
+  // ── Edit mode ─────────────────────────────────────────
+  &__dest-edit {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  &__dest-prefix-locked {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-accent;
+    flex-shrink: 0;
+  }
+
+  &__dest-input {
+    flex: 1;
+    min-width: 160px;
+
+    .mat-mdc-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+
+  &__dest-ext-locked {
+    font-family: 'Consolas', 'Fira Code', monospace;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    flex-shrink: 0;
+  }
+
+  &__btn-confirm-edit {
+    height: 32px !important;
+    line-height: 30px !important;
+    padding: 0 $spacing-base !important;
+    font-size: $font-size-sm !important;
+    flex-shrink: 0;
+  }
+
+  &__btn-cancel-edit {
+    color: $color-text-muted !important;
+    height: 32px !important;
+    line-height: 30px !important;
+    padding: 0 $spacing-sm !important;
+    font-size: $font-size-sm !important;
+    flex-shrink: 0;
+  }
+}
