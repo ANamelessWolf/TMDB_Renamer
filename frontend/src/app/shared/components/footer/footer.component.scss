@@ -1,0 +1,45 @@
+@import '../../../../styles/variables';
+
+.footer {
+  border-top: 1px solid $color-border;
+  background: $color-bg-secondary;
+  margin-top: auto;
+
+  &__inner {
+    max-width: $content-max-width;
+    margin: 0 auto;
+    padding: $spacing-lg $spacing-base $spacing-xl;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+
+    @media (min-width: 600px) {
+      padding: $spacing-lg $spacing-xl $spacing-xl;
+    }
+  }
+
+  &__line,
+  &__copyright {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__label {
+    margin-right: $spacing-xs;
+    color: $color-text-secondary;
+  }
+
+  &__link {
+    color: $color-primary-light;
+    text-decoration: none;
+    font-weight: $font-weight-semibold;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+  }
+}

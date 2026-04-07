@@ -1,0 +1,43 @@
+@if (variant === 'stroked') {
+  <button
+    [type]="type"
+    mat-stroked-button
+    [color]="color"
+    [disabled]="disabled"
+    class="action-button"
+  >
+    <span class="action-button__content">
+      @if (loading) {
+        <mat-spinner
+          class="action-button__spinner"
+          [diameter]="spinnerDiameter"
+          [strokeWidth]="spinnerStrokeWidth"
+        ></mat-spinner>
+      } @else if (icon) {
+        <mat-icon class="action-button__icon">{{ icon }}</mat-icon>
+      }
+      <span class="action-button__label">{{ label }}</span>
+    </span>
+  </button>
+} @else {
+  <button
+    [type]="type"
+    mat-flat-button
+    [color]="color"
+    [disabled]="disabled"
+    class="action-button"
+  >
+    <span class="action-button__content">
+      @if (loading) {
+        <mat-spinner
+          class="action-button__spinner"
+          [diameter]="spinnerDiameter"
+          [strokeWidth]="spinnerStrokeWidth"
+        ></mat-spinner>
+      } @else if (icon) {
+        <mat-icon class="action-button__icon">{{ icon }}</mat-icon>
+      }
+      <span class="action-button__label">{{ label }}</span>
+    </span>
+  </button>
+}

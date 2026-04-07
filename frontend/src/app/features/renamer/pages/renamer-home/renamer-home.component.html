@@ -25,20 +25,15 @@
         </mat-form-field>
 
         <!-- Refresh -->
-        <button
-          mat-flat-button
-          color="primary"
+        <app-action-button
           class="toolbar__refresh-btn"
-          (click)="onRefresh()"
+          label="Refresh"
+          icon="refresh"
+          color="primary"
+          [loading]="isLoading"
           [disabled]="isLoading"
-        >
-          @if (isLoading) {
-            <mat-spinner diameter="18" strokeWidth="2.5"></mat-spinner>
-          } @else {
-            <mat-icon>refresh</mat-icon>
-          }
-          <span>Refresh</span>
-        </button>
+          (click)="onRefresh()"
+        ></app-action-button>
 
         <!-- Season selector -->
         @if (allSeasons.length > 0) {
@@ -73,20 +68,18 @@
               <mat-hint>Matched: {{ selectedShowName }}</mat-hint>
             }
           </mat-form-field>
-          <button
-            type="button"
-            mat-stroked-button
+          <app-action-button
             class="toolbar__tmdb-search-btn"
-            (click)="onSearchTmdb()"
+            label="Search TMDB"
+            icon="search"
+            variant="stroked"
+            color="primary"
+            [loading]="isLoadingSeasons"
             [disabled]="isLoadingSeasons"
-          >
-            @if (isLoadingSeasons) {
-              <mat-spinner diameter="16" strokeWidth="2"></mat-spinner>
-            } @else {
-              <mat-icon>search</mat-icon>
-            }
-            Search TMDB
-          </button>
+            [spinnerDiameter]="16"
+            [spinnerStrokeWidth]="2"
+            (click)="onSearchTmdb()"
+          ></app-action-button>
         </div>
       }
 
@@ -117,20 +110,15 @@
             }
           </div>
 
-          <button
-            mat-flat-button
-            color="accent"
+          <app-action-button
             class="toolbar__save-btn"
-            (click)="onSave()"
+            label="Save & Rename"
+            icon="save"
+            color="accent"
+            [loading]="isSaving"
             [disabled]="!hasMappingsToSave || isSaving"
-          >
-            @if (isSaving) {
-              <mat-spinner diameter="18" strokeWidth="2.5"></mat-spinner>
-            } @else {
-              <mat-icon>save</mat-icon>
-            }
-            <span>Save &amp; Rename</span>
-          </button>
+            (click)="onSave()"
+          ></app-action-button>
         </div>
       }
     </section>
@@ -179,4 +167,6 @@
     }
 
   </main>
+
+  <app-footer></app-footer>
 </div>

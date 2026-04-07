@@ -23,6 +23,8 @@ import { MatCardModule } from '@angular/material/card';
 
 // Shared
 import { TopBarComponent } from '../../shared/components/top-bar/top-bar.component';
+import { ActionButtonComponent } from '../../shared/components/action-button/action-button.component';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
 
 // Feature components
 import { RenamerHomeComponent } from './pages/renamer-home/renamer-home.component';
@@ -66,6 +68,8 @@ const MATERIAL_MODULES = [
     FormsModule,
     RouterModule.forChild(routes),
     TopBarComponent,
+    ActionButtonComponent,
+    FooterComponent,
     ...MATERIAL_MODULES,
   ],
 })

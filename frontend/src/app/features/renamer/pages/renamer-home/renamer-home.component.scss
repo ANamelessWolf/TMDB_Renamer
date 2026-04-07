@@ -63,16 +63,7 @@
 
   &__refresh-btn,
   &__save-btn {
-    display: flex;
-    align-items: center;
-    gap: $spacing-xs;
-    height: 56px;
-    padding: 0 $spacing-xl;
     flex-shrink: 0;
-
-    mat-spinner {
-      margin-right: 2px;
-    }
   }
 
   &__show-info {
@@ -107,11 +98,6 @@
   }
 
   &__tmdb-search-btn {
-    display: flex;
-    align-items: center;
-    gap: $spacing-xs;
-    height: 56px;
-    padding: 0 $spacing-xl;
     flex-shrink: 0;
     color: $color-primary-light !important;
     border-color: rgba($color-primary, 0.4) !important;
@@ -119,8 +105,6 @@
     &:hover {
       background: rgba($color-primary, 0.08) !important;
     }
-
-    mat-spinner { margin-right: 2px; }
   }
 
   &__stats {
