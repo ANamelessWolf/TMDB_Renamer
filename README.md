@@ -1,6 +1,7 @@
 # TMDB Renamer
 
 TMDB Renamer is a web app for renaming TV episode files using data from The Movie Database (TMDB).
+<img width="1170" height="641" alt="imagen" src="https://github.com/user-attachments/assets/0ec897c8-c205-427a-8359-acd096915ce3" />
 
 The app:
 - Reads video files from a folder on your machine
