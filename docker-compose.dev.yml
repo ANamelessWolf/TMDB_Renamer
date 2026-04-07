@@ -13,6 +13,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
+      - PUBLIC_API_URL=http://localhost:3004
     volumes:
       - ./backend/src:/app/src
       - ./backend/tsconfig.json:/app/tsconfig.json

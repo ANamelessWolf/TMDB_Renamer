@@ -8,6 +8,7 @@ dotenv.config({
 
 export const env = {
   port: parseInt(process.env.PORT || '3000', 10),
+  publicApiUrl: process.env.PUBLIC_API_URL || `http://localhost:${process.env.PORT || '3000'}`,
   nodeEnv: process.env.NODE_ENV || 'development',
   tmdb: {
     apiKey: process.env.TMDB_API_KEY || '',
