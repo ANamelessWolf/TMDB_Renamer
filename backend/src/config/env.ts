@@ -1,5 +1,10 @@
+import path from 'path';
 import dotenv from 'dotenv';
-dotenv.config();
+
+// Load the backend-local .env regardless of the process working directory.
+dotenv.config({
+  path: path.resolve(__dirname, '../../.env'),
+});
 
 export const env = {
   port: parseInt(process.env.PORT || '3000', 10),
